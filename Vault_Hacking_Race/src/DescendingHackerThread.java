@@ -1,8 +1,7 @@
-public class DescendingHackerThread extends Thread{
-    private Vault vault;
+public class DescendingHackerThread extends HackerThread{
     public DescendingHackerThread(Vault vault)
     {
-        this.vault=vault;
+        super(vault);
         this.setName("DescendingHacker");
     }
 
@@ -12,12 +11,7 @@ public class DescendingHackerThread extends Thread{
         {
             if(vault.isCorrectPassword(guess))
             {
-                System.out.println("-------------------------------------------------");
-                System.out.println(this.getName() + " found the password! It was " + guess);
-                System.out.println("HACKERS WIN!");
-                System.out.println("-------------------------------------------------");
-
-                System.exit(0);
+                foundPassword(guess);
             }
         }
     }
