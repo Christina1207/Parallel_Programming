@@ -1,4 +1,4 @@
-public abstract class TestThread {
+public abstract class TestThread extends Thread  {
     SortList list;
 
     Integer [] nums;
