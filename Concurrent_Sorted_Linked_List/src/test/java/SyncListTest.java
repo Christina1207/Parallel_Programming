@@ -27,6 +27,7 @@ public class SyncListTest extends TestCase {
     }
 
     int randLen = 20_000;
+    int numOfThreads = 16;
    public void testHelp(SortList list, String label) {
         RandomSeq seq = new RandomSeq(0, 80_000);
         List<Thread> addThreads = new ArrayList<>();
