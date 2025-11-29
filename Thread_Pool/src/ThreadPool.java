@@ -29,5 +29,32 @@ public class ThreadPool {
         }
     }
 
+    //Task1 : execute and give the task to a thread from the pool
+    public synchronized void execute (Runnable task) throws Exception{
+        if(this.isStopped) throw new IllegalStateException("Thread Pool is stopped");
 
+        // if the queue is full , no more tasks can be taken now so we wait
+        while(this.taskQueue.size()>=maxQueueSize){
+            this.wait();
+        }
+
+        // add the task to the queue and notify all the threads of the change of state
+        this.taskQueue.add(task);
+        this.notifyAll();
+    }
+
+    private synchronized Runnable takeTask() throws InterruptedException{
+
+        while (this.taskQueue.isEmpty()) {
+            if (this.isStopped) return null; //exit if stopped and empty
+            this.wait(); //wait for a task to be added
+        }
+
+        Runnable task = this.taskQueue.removeFirst();
+        this.activeTasks++;
+
+        // Notify execute() that there is space in the queue
+        this.notifyAll();
+        return task;
+    }
 }
