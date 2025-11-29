@@ -6,6 +6,8 @@ public class PoolThreadRunnable implements Runnable {
     public PoolThreadRunnable (ThreadPool pool){
         this.threadPool=pool;
     }
+
+    //Task1
     public void run(){
         this.thread = Thread.currentThread();
         while(!isStopped){
@@ -23,4 +25,12 @@ public class PoolThreadRunnable implements Runnable {
         }
     }
 
+    //Task3
+    public synchronized void stop() {
+        isStopped = true;
+        // Interrupt the thread in case it is sleeping or waiting
+        if (this.thread != null) {
+            this.thread.interrupt();
+        }
+    }
 }

@@ -57,4 +57,14 @@ public class ThreadPool {
         this.notifyAll();
         return task;
     }
+
+    //Task3 : Stop the thread pool
+    public synchronized void stop(){
+        this.isStopped=true;
+        this.notifyAll();
+
+        for(PoolThreadRunnable runnable:runnables){
+            runnable.stop();//interrupts the threads
+        }
+    }
 }
