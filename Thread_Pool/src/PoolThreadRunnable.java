@@ -22,6 +22,12 @@ public class PoolThreadRunnable implements Runnable {
             catch (Exception e) {
                 System.err.println("Error in task execution: " + e.getMessage());
             }
+            finally {
+                //report completion
+                if (this.thread != null && !this.thread.isInterrupted()) {
+                    threadPool.taskFinished();
+                }
+            }
         }
     }
 

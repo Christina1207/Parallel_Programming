@@ -58,6 +58,34 @@ public class ThreadPool {
         return task;
     }
 
+    //Task2 : wait until all tasks are finished
+    public synchronized void waitUntilAllTaskFinished(long timeout) {
+        long endTime = System.currentTimeMillis() + timeout;
+
+        while (!this.taskQueue.isEmpty() || this.activeTasks > 0) {
+            long timeLeft = endTime - System.currentTimeMillis();
+
+            if (timeLeft <= 0) {
+                //timeout exceeded, Force stop.
+                System.out.println("Timeout reached! Stopping pool...");
+                stop();
+                return;
+            }
+
+            try {
+                this.wait(timeLeft);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
+    protected synchronized void taskFinished() {
+        this.activeTasks--;
+        //notify waitUntilAllTaskFinished() to check if it's done
+        this.notifyAll();
+    }
+
     //Task3 : Stop the thread pool
     public synchronized void stop(){
         this.isStopped=true;

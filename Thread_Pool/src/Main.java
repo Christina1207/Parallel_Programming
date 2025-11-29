@@ -16,5 +16,10 @@ public class Main {
             });
         }
         System.out.println("All tasks submitted.");
+
+        threadPool.waitUntilAllTaskFinished(15000);
+
+        threadPool.stop();
+        System.out.println("Finished.");
     }
 }
