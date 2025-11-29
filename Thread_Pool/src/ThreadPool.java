@@ -43,7 +43,7 @@ public class ThreadPool {
         this.notifyAll();
     }
 
-    private synchronized Runnable takeTask() throws InterruptedException{
+    protected synchronized Runnable takeTask() throws InterruptedException{
 
         while (this.taskQueue.isEmpty()) {
             if (this.isStopped) return null; //exit if stopped and empty
